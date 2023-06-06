@@ -1,1 +1,1 @@
-wyam -wp
+dotnet run -- preview

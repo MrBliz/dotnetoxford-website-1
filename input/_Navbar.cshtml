@@ -1,27 +1,22 @@
-@{
-    List<Tuple<string, string>> pages = Context
-        .Documents[Blog.Pages]
-        .Where(x => x.Bool(BlogKeys.ShowInNavbar, true))
-        .Where(x => x.FilePath(Keys.RelativeFilePath)?.FullPath?.StartsWith("index") == (bool?)false)
-        .Select(x => Tuple.Create(x.WithoutSettings.String(Keys.Title), Context.GetLink(x)))
-        .Where(x => !string.IsNullOrEmpty(x.Item1))
-        .OrderBy(x => x.Item1)
-        .ToList();
+<li class="nav-item">
+   <a class="nav-link" href="/Discord">Discord</a>
+ </li>
 
-    if(Documents[Blog.Tags].Any())
-    {
-        pages.Insert(0, Tuple.Create("Tags", Context.GetLink("tags/index.html")));
-    }
-    if(Documents[Blog.BlogPosts].Any() && Context.Bool(BlogKeys.GenerateArchive))
-    {
-        pages.Insert(0, Tuple.Create("Archive", Context.GetLink(Context.String(BlogKeys.PostsPath) + "/index.html")));
-    }
+<li class="nav-item">
+   <a class="nav-link" href="https://www.meetup.com/dotnetoxford">Meetup</a>
+ </li>
 
-    pages.Insert(0, Tuple.Create("Discord", "/discord"));
-    pages.Insert(0, Tuple.Create("Meetup", "https://www.meetup.com/dotnetoxford"));
 
-    foreach(Tuple<string, string> page in pages)
-    {
-        <li><a href="@(page.Item2)">@(page.Item1)</a></li>
-    }
+@foreach(IDocument doc in Context.OutputPages.Where(x => x.GetBool("ShowInNavbar", x.GetBool("IsPage"))).OrderBy(x => x.GetInt(Keys.Order)))
+{
+
+  if(doc.GetTitle() == "Posts") continue;
+  // Pages get added to the navigation bar by default,
+  // other pages (including posts) only if they have ShowInNavbar set to true
+  <li class="nav-item">
+    @Html.DocumentLink(
+      doc,
+      doc.GetString("NavbarTitle", doc.GetTitle()),
+      new Dictionary<object, object> { { "class", "nav-link" } })
+  </li>
 }

@@ -1,5 +1,7 @@
-output/
-config.wyam.dll
-config.wyam.hash
-config.wyam.packages.xml
+/bin
+/cache
+/obj
+/output
+/.vs
+/.idea
 .ionide/

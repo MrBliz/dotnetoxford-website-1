@@ -1,0 +1,18 @@
+#r Blog
+#t CleanBlog
+
+
+
+# Customize your settings and add new ones here
+Host: "dotnetoxford.com"
+SiteTitle: ".NET Oxford"
+Description: ""
+Image: "/assets/images/header.jpg"
+GenerateArchive: false
+IndexPageSize: 4
+IndexPaging: true
+#TagPageSize: 100
+DateTimeInputCulture: "en-GB"
+DateTimeDisplayCulture: "en-GB"
+# Add any pipeline customizations here
+Layout: /_layout.cshtml
